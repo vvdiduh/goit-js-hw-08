@@ -11,29 +11,45 @@ const formValue = {
 const parsedValue = JSON.parse(localStorage.getItem('FORM_VALUE'));
 
 refs.form.addEventListener('submit', onFormSubmit);
-refs.email.addEventListener('input', onEmailInput);
-refs.message.addEventListener('input', onMessageInput);
+refs.email.addEventListener('input', onTextInput);
+refs.message.addEventListener('input', onTextInput);
 
-savedValue(parsedValue);
+savedValue()
 
-function onFormSubmit(evt){
+function onFormSubmit(evt) {
     evt.preventDefault();
+    if (refs.message.value === '') {
+        alert('заповніть message');
+        return
+    }
+    if (refs.email.value === '') {
+        alert('заповніть email');
+        return
+    }
+    console.log(parsedValue);
     localStorage.removeItem('FORM_VALUE');
-    evt.currentTarget.reset()
+    evt.currentTarget.reset();
 }
 
-function onEmailInput(evt) {
-    formValue.email = evt.currentTarget.value;
+function onTextInput(evt) {
+    if (evt.target.name === 'email') {
+        formValue.email = evt.target.value;
+    }
+    if (evt.target.name === 'message') {
+        formValue.message = evt.target.value;
+    }
     localStorage.setItem('FORM_VALUE', JSON.stringify(formValue))
 }
 
-function onMessageInput(evt) {
-    formValue.message = evt.currentTarget.value;
-    localStorage.setItem('FORM_VALUE', JSON.stringify(formValue))
-}
+// function onMessageInput(evt) {
+//     formValue.message = evt.currentTarget.value;
+//     localStorage.setItem('FORM_VALUE', JSON.stringify(formValue))
+// }
 
-function savedValue(parsedValue) {
-    const { email, message } = parsedValue;
-    refs.email.value = email;
-    refs.message.value = message;
+function savedValue() {   
+    if (parsedValue) {
+        const { email, message } = parsedValue;
+        refs.email.value = email;
+        refs.message.value = message;
+    }
 }
