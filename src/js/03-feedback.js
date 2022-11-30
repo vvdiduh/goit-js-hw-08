@@ -4,10 +4,6 @@ const refs = {
     form: document.querySelector('.feedback-form')
 }
 const FORM_VALUE = 'feedback-form-state';
-const formValue = {
-    email: '',
-    message: ''
-};
 const parsedValue = JSON.parse(localStorage.getItem('FORM_VALUE'));
 
 refs.form.addEventListener('submit', onFormSubmit);
@@ -33,18 +29,13 @@ function onFormSubmit(evt) {
 
 function onTextInput(evt) {
     if (evt.target.name === 'email') {
-        formValue.email = evt.target.value;
+        parsedValue.email = evt.target.value;
     }
     if (evt.target.name === 'message') {
-        formValue.message = evt.target.value;
+        parsedValue.message = evt.target.value;
     }
-    localStorage.setItem('FORM_VALUE', JSON.stringify(formValue))
+    localStorage.setItem('FORM_VALUE', JSON.stringify(parsedValue))
 }
-
-// function onMessageInput(evt) {
-//     formValue.message = evt.currentTarget.value;
-//     localStorage.setItem('FORM_VALUE', JSON.stringify(formValue))
-// }
 
 function savedValue() {   
     if (parsedValue) {
